@@ -1,0 +1,6 @@
+@import "pod-styles";
+@import "common";
+
+html, body, body > .ember-view{
+  height: 100%;
+}

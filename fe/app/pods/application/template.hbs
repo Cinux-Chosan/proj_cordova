@@ -1,0 +1,19 @@
+<!-- Status bar overlay for full screen mode (PhoneGap) -->
+<div class="statusbar-overlay"></div>
+<div class="panel-overlay"></div>
+<!-- Views -->
+<div class="views">
+  <!-- Your main view, should have "view-main" class -->
+  <div class="view view-main">
+    {{#application/application-comp class="pages navbar-fixed toolbar-fixed"}}
+      {{outlet}}
+    {{/application/application-comp}}
+  </div>
+</div>
+
+<div class="panel panel-left panel-cover" id="left-panel">
+  {{!-- 左侧侧边栏 --}}
+</div>
+
+{{!-- f7 login-screen --}}
+{{login/login-comp}}

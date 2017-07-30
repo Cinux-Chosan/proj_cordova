@@ -1,0 +1,50 @@
+{{#ember-wormhole to="f7-login-screen" }}
+  <!-- Default view-page layout -->
+  <div class="view">
+    <div class="page">
+      <!-- page-content has additional login-screen content -->
+      <div class="page-content login-screen-content">
+        <div class="content-block">
+
+          <div class="login-screen-title">APP</div>
+          <!-- Login form -->
+          <form>
+            <div class="list-block">
+              <ul>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label hidden">用户名</div>
+                    <div class="item-input">
+                      <input type="text" name="username" placeholder="Username">
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label hidden">密码</div>
+                    <div class="item-input">
+                      <input type="password" name="password" placeholder="Password">
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="list-block">
+              <ul>
+                <li>
+                  <a href="#" class="button button-big button-fill">登 陆</a>
+                </li>
+              </ul>
+              <div class="list-block-labe pt20">
+                {{link-to "忘记密码？" "resetpwd" class="fl close-login-screen"}} {{link-to "新用户注册" "signup" class="fr close-login-screen"}}
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="protocol-tip pos-abs l0 b0 text-center w100p mb10">
+          登陆即代表阅读并同意 <a href="javascript:;" class="close-login-scree">服务条款</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/ember-wormhole}}
