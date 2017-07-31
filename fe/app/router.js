@@ -11,6 +11,7 @@ Router.map(function() {
   this.route('login');
   this.route('resetpwd');
   this.route('signup');
+  this.route('bdmap');
 });
 
 export default Router;

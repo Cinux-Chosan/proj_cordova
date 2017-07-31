@@ -325,7 +325,7 @@ define("fe/pods/application/application-comp/template", ["exports"], function (e
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "yGSB/UTe", "block": "{\"statements\":[[18,\"default\"],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[\"default\"],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/application/application-comp/template.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "DNi3TCTM", "block": "{\"statements\":[[18,\"default\"],[0,\"\\n\\n\\n\"]],\"locals\":[],\"named\":[],\"yields\":[\"default\"],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/application/application-comp/template.hbs" } });
 });
 define('fe/pods/application/route', ['exports', 'ember'], function (exports, _ember) {
   'use strict';
@@ -347,6 +347,49 @@ define("fe/pods/application/template", ["exports"], function (exports) {
   });
   exports.default = Ember.HTMLBars.template({ "id": "XZI2P9mS", "block": "{\"statements\":[[4,\" Status bar overlay for full screen mode (PhoneGap) \"],[0,\"\\n\"],[11,\"div\",[]],[15,\"class\",\"statusbar-overlay\"],[13],[14],[0,\"\\n\"],[11,\"div\",[]],[15,\"class\",\"panel-overlay\"],[13],[14],[0,\"\\n\"],[4,\" Views \"],[0,\"\\n\"],[11,\"div\",[]],[15,\"class\",\"views\"],[13],[0,\"\\n  \"],[4,\" Your main view, should have \\\"view-main\\\" class \"],[0,\"\\n  \"],[11,\"div\",[]],[15,\"class\",\"view view-main\"],[13],[0,\"\\n\"],[6,[\"application/application-comp\"],null,[[\"class\"],[\"pages navbar-fixed toolbar-fixed\"]],{\"statements\":[[0,\"      \"],[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[]},null],[0,\"  \"],[14],[0,\"\\n\"],[14],[0,\"\\n\\n\"],[11,\"div\",[]],[15,\"class\",\"panel panel-left panel-cover\"],[15,\"id\",\"left-panel\"],[13],[0,\"\\n\"],[14],[0,\"\\n\\n\"],[1,[26,[\"login/login-comp\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/application/template.hbs" } });
 });
+define('fe/pods/bdmap/route', ['exports', 'ember'], function (exports, _ember) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = _ember.default.Route.extend({});
+});
+define("fe/pods/bdmap/template", ["exports"], function (exports) {
+  "use strict";
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.HTMLBars.template({ "id": "Y62SS0tZ", "block": "{\"statements\":[[1,[26,[\"bd-map\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/bdmap/template.hbs" } });
+});
+define('fe/pods/components/bd-map/component', ['exports', 'ember'], function (exports, _ember) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = _ember.default.Component.extend({
+    classNames: ['w100p', 'h100p', 'bd-map-container'],
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
+      var mapEle = this.$('#' + this.get('componentCssClassName')).get(0);
+      var map = new BMap.Map(mapEle);
+      var point = new BMap.Point(116.404, 39.915);
+      map.centerAndZoom(point, 15);
+      map.addControl(new BMap.ScaleControl());
+      map.addControl(new BMap.GeolocationControl());
+    }
+  });
+});
+define("fe/pods/components/bd-map/template", ["exports"], function (exports) {
+  "use strict";
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.HTMLBars.template({ "id": "InSOz2uO", "block": "{\"statements\":[[11,\"div\",[]],[15,\"class\",\"bd-map-inner\"],[13],[0,\"\\n  \"],[11,\"div\",[]],[15,\"class\",\"bd-map-drawer\"],[16,\"id\",[26,[\"componentCssClassName\"]],null],[13],[0,\"\\n  \"],[14],[0,\"\\n\"],[14],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/components/bd-map/template.hbs" } });
+});
 define('fe/pods/components/plain-comp/component', ['exports', 'ember'], function (exports, _ember) {
   'use strict';
 
@@ -362,6 +405,22 @@ define("fe/pods/components/plain-comp/template", ["exports"], function (exports)
     value: true
   });
   exports.default = Ember.HTMLBars.template({ "id": "dN5WKYch", "block": "{\"statements\":[[18,\"default\"],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[\"default\"],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/components/plain-comp/template.hbs" } });
+});
+define('fe/pods/components/show-protocol/component', ['exports', 'ember'], function (exports, _ember) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = _ember.default.Component.extend({});
+});
+define("fe/pods/components/show-protocol/template", ["exports"], function (exports) {
+  "use strict";
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.HTMLBars.template({ "id": "7LwTakrK", "block": "{\"statements\":[[11,\"div\",[]],[15,\"class\",\"popup popup-protocol show-protocol\"],[13],[0,\"\\n  \"],[11,\"div\",[]],[15,\"class\",\"content-block\"],[13],[0,\"\\n    \"],[18,\"default\"],[0,\"\\n  \"],[11,\"a\",[]],[15,\"class\",\"close-popup\"],[15,\"data-popup\",\".show-protocol\"],[13],[0,\"关闭\"],[14],[0,\"\\n  \"],[14],[0,\"\\n\"],[14],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[\"default\"],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/components/show-protocol/template.hbs" } });
 });
 define('fe/pods/home/route', ['exports', 'ember'], function (exports, _ember) {
   'use strict';
@@ -393,7 +452,7 @@ define("fe/pods/index/template", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "DcVV9SeR", "block": "{\"statements\":[[1,[26,[\"outlet\"]],false],[0,\"\\n\"],[11,\"button\",[]],[15,\"type\",\"button\"],[15,\"name\",\"button\"],[15,\"class\",\"open-login-screen\"],[13],[0,\"登陆\"],[14],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/index/template.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "jdufFnyu", "block": "{\"statements\":[[1,[26,[\"outlet\"]],false],[0,\"\\n\"],[11,\"button\",[]],[15,\"type\",\"button\"],[15,\"name\",\"button\"],[15,\"class\",\"open-login-screen\"],[13],[0,\"登陆\"],[14],[0,\"\\n\"],[6,[\"link-to\"],[\"bdmap\"],null,{\"statements\":[[0,\"  bdmap\\n\"]],\"locals\":[]},null]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/index/template.hbs" } });
 });
 define('fe/pods/login/login-comp/component', ['exports', 'ember'], function (exports, _ember) {
   'use strict';
@@ -413,7 +472,7 @@ define("fe/pods/login/login-comp/template", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "HHodYxGH", "block": "{\"statements\":[[6,[\"ember-wormhole\"],null,[[\"to\"],[\"f7-login-screen\"]],{\"statements\":[[0,\"  \"],[4,\" Default view-page layout \"],[0,\"\\n  \"],[11,\"div\",[]],[15,\"class\",\"view\"],[13],[0,\"\\n    \"],[11,\"div\",[]],[15,\"class\",\"page\"],[13],[0,\"\\n      \"],[4,\" page-content has additional login-screen content \"],[0,\"\\n      \"],[11,\"div\",[]],[15,\"class\",\"page-content login-screen-content\"],[13],[0,\"\\n        \"],[11,\"div\",[]],[15,\"class\",\"content-block\"],[13],[0,\"\\n\\n          \"],[11,\"div\",[]],[15,\"class\",\"login-screen-title\"],[13],[0,\"APP\"],[14],[0,\"\\n          \"],[4,\" Login form \"],[0,\"\\n          \"],[11,\"form\",[]],[13],[0,\"\\n            \"],[11,\"div\",[]],[15,\"class\",\"list-block\"],[13],[0,\"\\n              \"],[11,\"ul\",[]],[13],[0,\"\\n                \"],[11,\"li\",[]],[15,\"class\",\"item-content\"],[13],[0,\"\\n                  \"],[11,\"div\",[]],[15,\"class\",\"item-inner\"],[13],[0,\"\\n                    \"],[11,\"div\",[]],[15,\"class\",\"item-title label hidden\"],[13],[0,\"用户名\"],[14],[0,\"\\n                    \"],[11,\"div\",[]],[15,\"class\",\"item-input\"],[13],[0,\"\\n                      \"],[11,\"input\",[]],[15,\"type\",\"text\"],[15,\"name\",\"username\"],[15,\"placeholder\",\"Username\"],[13],[14],[0,\"\\n                    \"],[14],[0,\"\\n                  \"],[14],[0,\"\\n                \"],[14],[0,\"\\n                \"],[11,\"li\",[]],[15,\"class\",\"item-content\"],[13],[0,\"\\n                  \"],[11,\"div\",[]],[15,\"class\",\"item-inner\"],[13],[0,\"\\n                    \"],[11,\"div\",[]],[15,\"class\",\"item-title label hidden\"],[13],[0,\"密码\"],[14],[0,\"\\n                    \"],[11,\"div\",[]],[15,\"class\",\"item-input\"],[13],[0,\"\\n                      \"],[11,\"input\",[]],[15,\"type\",\"password\"],[15,\"name\",\"password\"],[15,\"placeholder\",\"Password\"],[13],[14],[0,\"\\n                    \"],[14],[0,\"\\n                  \"],[14],[0,\"\\n                \"],[14],[0,\"\\n              \"],[14],[0,\"\\n            \"],[14],[0,\"\\n            \"],[11,\"div\",[]],[15,\"class\",\"list-block\"],[13],[0,\"\\n              \"],[11,\"ul\",[]],[13],[0,\"\\n                \"],[11,\"li\",[]],[13],[0,\"\\n                  \"],[11,\"a\",[]],[15,\"href\",\"#\"],[15,\"class\",\"button button-big button-fill\"],[13],[0,\"登 陆\"],[14],[0,\"\\n                \"],[14],[0,\"\\n              \"],[14],[0,\"\\n              \"],[11,\"div\",[]],[15,\"class\",\"list-block-labe pt20\"],[13],[0,\"\\n                \"],[6,[\"link-to\"],[\"resetpwd\"],[[\"class\"],[\"fl close-login-screen\"]],{\"statements\":[[0,\"忘记密码？\"]],\"locals\":[]},null],[0,\" \"],[6,[\"link-to\"],[\"signup\"],[[\"class\"],[\"fr close-login-screen\"]],{\"statements\":[[0,\"新用户注册\"]],\"locals\":[]},null],[0,\"\\n              \"],[14],[0,\"\\n            \"],[14],[0,\"\\n          \"],[14],[0,\"\\n        \"],[14],[0,\"\\n        \"],[11,\"div\",[]],[15,\"class\",\"protocol-tip pos-abs l0 b0 text-center w100p mb10\"],[13],[0,\"\\n          登陆即代表阅读并同意 \"],[11,\"a\",[]],[15,\"href\",\"javascript:;\"],[15,\"class\",\"close-login-scree\"],[13],[0,\"服务条款\"],[14],[0,\"\\n        \"],[14],[0,\"\\n      \"],[14],[0,\"\\n    \"],[14],[0,\"\\n  \"],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/login/login-comp/template.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "aM9Rghyi", "block": "{\"statements\":[[6,[\"ember-wormhole\"],null,[[\"to\"],[\"f7-login-screen\"]],{\"statements\":[[0,\"  \"],[4,\" Default view-page layout \"],[0,\"\\n  \"],[11,\"div\",[]],[15,\"class\",\"view\"],[13],[0,\"\\n    \"],[11,\"div\",[]],[15,\"class\",\"page\"],[13],[0,\"\\n      \"],[4,\" page-content has additional login-screen content \"],[0,\"\\n      \"],[11,\"div\",[]],[15,\"class\",\"page-content login-screen-content\"],[13],[0,\"\\n        \"],[11,\"div\",[]],[15,\"class\",\"content-block\"],[13],[0,\"\\n\\n          \"],[11,\"div\",[]],[15,\"class\",\"login-screen-title\"],[13],[0,\"APP\"],[14],[0,\"\\n          \"],[4,\" Login form \"],[0,\"\\n          \"],[11,\"form\",[]],[13],[0,\"\\n            \"],[11,\"div\",[]],[15,\"class\",\"list-block\"],[13],[0,\"\\n              \"],[11,\"ul\",[]],[13],[0,\"\\n                \"],[11,\"li\",[]],[15,\"class\",\"item-content\"],[13],[0,\"\\n                  \"],[11,\"div\",[]],[15,\"class\",\"item-inner\"],[13],[0,\"\\n                    \"],[11,\"div\",[]],[15,\"class\",\"item-title label hidden\"],[13],[0,\"用户名\"],[14],[0,\"\\n                    \"],[11,\"div\",[]],[15,\"class\",\"item-input\"],[13],[0,\"\\n                      \"],[11,\"input\",[]],[15,\"type\",\"text\"],[15,\"name\",\"username\"],[15,\"placeholder\",\"Username\"],[13],[14],[0,\"\\n                    \"],[14],[0,\"\\n                  \"],[14],[0,\"\\n                \"],[14],[0,\"\\n                \"],[11,\"li\",[]],[15,\"class\",\"item-content\"],[13],[0,\"\\n                  \"],[11,\"div\",[]],[15,\"class\",\"item-inner\"],[13],[0,\"\\n                    \"],[11,\"div\",[]],[15,\"class\",\"item-title label hidden\"],[13],[0,\"密码\"],[14],[0,\"\\n                    \"],[11,\"div\",[]],[15,\"class\",\"item-input\"],[13],[0,\"\\n                      \"],[11,\"input\",[]],[15,\"type\",\"password\"],[15,\"name\",\"password\"],[15,\"placeholder\",\"Password\"],[13],[14],[0,\"\\n                    \"],[14],[0,\"\\n                  \"],[14],[0,\"\\n                \"],[14],[0,\"\\n              \"],[14],[0,\"\\n            \"],[14],[0,\"\\n            \"],[11,\"div\",[]],[15,\"class\",\"list-block\"],[13],[0,\"\\n              \"],[11,\"ul\",[]],[13],[0,\"\\n                \"],[11,\"li\",[]],[13],[0,\"\\n                  \"],[11,\"a\",[]],[15,\"href\",\"#\"],[15,\"class\",\"button button-big button-fill\"],[13],[0,\"登 陆\"],[14],[0,\"\\n                \"],[14],[0,\"\\n              \"],[14],[0,\"\\n              \"],[11,\"div\",[]],[15,\"class\",\"list-block-labe pt20\"],[13],[0,\"\\n                \"],[6,[\"link-to\"],[\"resetpwd\"],[[\"class\"],[\"fl close-login-screen\"]],{\"statements\":[[0,\"忘记密码？\"]],\"locals\":[]},null],[0,\" \"],[6,[\"link-to\"],[\"signup\"],[[\"class\"],[\"fr close-login-screen\"]],{\"statements\":[[0,\"新用户注册\"]],\"locals\":[]},null],[0,\"\\n              \"],[14],[0,\"\\n            \"],[14],[0,\"\\n          \"],[14],[0,\"\\n        \"],[14],[0,\"\\n        \"],[11,\"div\",[]],[15,\"class\",\"protocol-tip pos-abs l0 b0 text-center w100p mb10\"],[13],[0,\"\\n          登陆即代表阅读并同意 \"],[11,\"a\",[]],[15,\"class\",\"close-login-scree open-popup\"],[15,\"data-popup\",\".show-protocol\"],[13],[0,\"服务条款\"],[14],[0,\"\\n        \"],[14],[0,\"\\n      \"],[14],[0,\"\\n    \"],[14],[0,\"\\n  \"],[14],[0,\"\\n\"]],\"locals\":[]},null],[0,\"\\n\\n\"],[1,[26,[\"show-protocol\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/login/login-comp/template.hbs" } });
 });
 define('fe/pods/login/route', ['exports', 'ember'], function (exports, _ember) {
   'use strict';
@@ -429,7 +488,7 @@ define("fe/pods/login/template", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "eb18Wiq5", "block": "{\"statements\":[[1,[26,[\"login/login-comp\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/login/template.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "b54O/A61", "block": "{\"statements\":[[1,[26,[\"login/login-comp\"]],false],[0,\"\\n\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/login/template.hbs" } });
 });
 define('fe/pods/resetpwd/route', ['exports', 'ember'], function (exports, _ember) {
   'use strict';
@@ -489,6 +548,7 @@ define('fe/router', ['exports', 'ember', 'fe/config/environment'], function (exp
     this.route('login');
     this.route('resetpwd');
     this.route('signup');
+    this.route('bdmap');
   });
 
   exports.default = Router;
@@ -528,6 +588,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("fe/app")["default"].create({"name":"fe","version":"0.0.0+2f041bae"});
+  require("fe/app")["default"].create({"name":"fe","version":"0.0.0+60333010"});
 }
 //# sourceMappingURL=fe.map

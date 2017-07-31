@@ -20,9 +20,24 @@ define('fe/tests/app.lint-test', [], function () {
     assert.ok(true, 'pods/application/route.js should pass ESLint\n\n');
   });
 
+  QUnit.test('pods/bdmap/route.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'pods/bdmap/route.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('pods/components/bd-map/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'pods/components/bd-map/component.js should pass ESLint\n\n');
+  });
+
   QUnit.test('pods/components/plain-comp/component.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'pods/components/plain-comp/component.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('pods/components/show-protocol/component.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'pods/components/show-protocol/component.js should pass ESLint\n\n');
   });
 
   QUnit.test('pods/home/route.js', function (assert) {
@@ -43,6 +58,16 @@ define('fe/tests/app.lint-test', [], function () {
   QUnit.test('pods/login/route.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'pods/login/route.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('pods/resetpwd/route.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'pods/resetpwd/route.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('pods/signup/route.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'pods/signup/route.js should pass ESLint\n\n');
   });
 
   QUnit.test('resolver.js', function (assert) {
@@ -133,6 +158,36 @@ define('fe/tests/helpers/start-app', ['exports', 'ember', 'fe/app', 'fe/config/e
     });
   }
 });
+define('fe/tests/integration/pods/components/bd-map/component-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleForComponent)('bd-map', 'Integration | Component | bd map', {
+    integration: true
+  });
+
+  (0, _emberQunit.test)('it renders', function (assert) {
+
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+
+    this.render(Ember.HTMLBars.template({
+      "id": "a4ujGaPf",
+      "block": "{\"statements\":[[1,[26,[\"bd-map\"]],false]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}",
+      "meta": {}
+    }));
+
+    assert.equal(this.$().text().trim(), '');
+
+    // Template block usage:
+    this.render(Ember.HTMLBars.template({
+      "id": "S/ht+JHf",
+      "block": "{\"statements\":[[0,\"\\n\"],[6,[\"bd-map\"],null,null,{\"statements\":[[0,\"      template block text\\n\"]],\"locals\":[]},null],[0,\"  \"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}",
+      "meta": {}
+    }));
+
+    assert.equal(this.$().text().trim(), 'template block text');
+  });
+});
 define('fe/tests/integration/pods/components/plain-comp/component-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
 
@@ -157,6 +212,36 @@ define('fe/tests/integration/pods/components/plain-comp/component-test', ['ember
     this.render(Ember.HTMLBars.template({
       "id": "ECL3qwMP",
       "block": "{\"statements\":[[0,\"\\n\"],[6,[\"plain-comp\"],null,null,{\"statements\":[[0,\"      template block text\\n\"]],\"locals\":[]},null],[0,\"  \"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}",
+      "meta": {}
+    }));
+
+    assert.equal(this.$().text().trim(), 'template block text');
+  });
+});
+define('fe/tests/integration/pods/components/show-protocol/component-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleForComponent)('show-protocol', 'Integration | Component | show protocol', {
+    integration: true
+  });
+
+  (0, _emberQunit.test)('it renders', function (assert) {
+
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+
+    this.render(Ember.HTMLBars.template({
+      "id": "cWTpCCOn",
+      "block": "{\"statements\":[[1,[26,[\"show-protocol\"]],false]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}",
+      "meta": {}
+    }));
+
+    assert.equal(this.$().text().trim(), '');
+
+    // Template block usage:
+    this.render(Ember.HTMLBars.template({
+      "id": "AAx2zgBv",
+      "block": "{\"statements\":[[0,\"\\n\"],[6,[\"show-protocol\"],null,null,{\"statements\":[[0,\"      template block text\\n\"]],\"locals\":[]},null],[0,\"  \"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}",
       "meta": {}
     }));
 
@@ -194,9 +279,19 @@ define('fe/tests/tests.lint-test', [], function () {
     assert.ok(true, 'helpers/start-app.js should pass ESLint\n\n');
   });
 
+  QUnit.test('integration/pods/components/bd-map/component-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/pods/components/bd-map/component-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('integration/pods/components/plain-comp/component-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'integration/pods/components/plain-comp/component-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('integration/pods/components/show-protocol/component-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/pods/components/show-protocol/component-test.js should pass ESLint\n\n');
   });
 
   QUnit.test('test-helper.js', function (assert) {
@@ -207,6 +302,11 @@ define('fe/tests/tests.lint-test', [], function () {
   QUnit.test('unit/pods/application/route-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/pods/application/route-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/pods/bd-map/route-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/pods/bd-map/route-test.js should pass ESLint\n\n');
   });
 
   QUnit.test('unit/pods/home/route-test.js', function (assert) {
@@ -223,11 +323,34 @@ define('fe/tests/tests.lint-test', [], function () {
     assert.expect(1);
     assert.ok(true, 'unit/pods/login/route-test.js should pass ESLint\n\n');
   });
+
+  QUnit.test('unit/pods/resetpwd/route-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/pods/resetpwd/route-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/pods/signup/route-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/pods/signup/route-test.js should pass ESLint\n\n');
+  });
 });
 define('fe/tests/unit/pods/application/route-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
 
   (0, _emberQunit.moduleFor)('route:application', 'Unit | Route | application', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('fe/tests/unit/pods/bd-map/route-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('route:bd-map', 'Unit | Route | bd map', {
     // Specify the other units that are required for this test.
     // needs: ['controller:foo']
   });
@@ -267,6 +390,32 @@ define('fe/tests/unit/pods/login/route-test', ['ember-qunit'], function (_emberQ
   'use strict';
 
   (0, _emberQunit.moduleFor)('route:login', 'Unit | Route | login', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('fe/tests/unit/pods/resetpwd/route-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('route:resetpwd', 'Unit | Route | resetpwd', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('fe/tests/unit/pods/signup/route-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('route:signup', 'Unit | Route | signup', {
     // Specify the other units that are required for this test.
     // needs: ['controller:foo']
   });
