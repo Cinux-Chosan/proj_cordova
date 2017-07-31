@@ -595,6 +595,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("fe/app")["default"].create({"name":"fe","version":"0.0.0+60333010"});
+  require("fe/app")["default"].create({"name":"fe","version":"0.0.0+e8609459"});
 }
 //# sourceMappingURL=fe.map

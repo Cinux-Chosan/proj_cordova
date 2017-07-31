@@ -82970,13 +82970,6 @@ var InternalModel = function () {
       this.cancelDestroy();
     }
     this._checkForOrphanedInternalModels();
-    if (this.isDestroyed || this.isDestroying) {
-      return;
-    }
-
-    // just in-case we are not one of the orphaned, we should still
-    // still destroy ourselves
-    this.destroy();
   };
 
   InternalModel.prototype._checkForOrphanedInternalModels = function _checkForOrphanedInternalModels() {
@@ -87115,16 +87108,15 @@ Store = Service.extend({
     var trueId = coerceId(id);
     var internalModel = this._internalModelsFor(modelName).get(trueId);
 
-    if (internalModel) {
-      if (internalModel.hasScheduledDestroy()) {
-        internalModel.destroySync();
-        return this._buildInternalModel(modelName, trueId);
-      } else {
-        return internalModel;
-      }
+    if (!internalModel) {
+      internalModel = this._buildInternalModel(modelName, trueId);
     } else {
-      return this._buildInternalModel(modelName, trueId);
+      // if we already have an internalModel, we need to ensure any async teardown is cancelled
+      //   since we want it again.
+      internalModel.cancelDestroy();
     }
+
+    return internalModel;
   },
   _internalModelDidReceiveRelationshipData: function _internalModelDidReceiveRelationshipData(modelName, id, relationshipData) {
     this._relationshipsPayloads.push(modelName, id, relationshipData);
@@ -94824,7 +94816,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = "2.14.9";
+  exports.default = "2.14.8";
 });
 ;
 //# sourceMappingURL=vendor.map
