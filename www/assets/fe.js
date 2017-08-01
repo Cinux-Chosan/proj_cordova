@@ -451,7 +451,12 @@ define('fe/pods/index/route', ['exports', 'ember'], function (exports, _ember) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = _ember.default.Route.extend({});
+  exports.default = _ember.default.Route.extend({
+    xx: _ember.default.inject.service('service-geo'),
+    model: function model() {
+      console.log(this.get('xx').getGeo());
+    }
+  });
 });
 define("fe/pods/index/template", ["exports"], function (exports) {
   "use strict";
@@ -513,6 +518,74 @@ define("fe/pods/resetpwd/template", ["exports"], function (exports) {
   });
   exports.default = Ember.HTMLBars.template({ "id": "HJz9uxiK", "block": "{\"statements\":[[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/resetpwd/template.hbs" } });
 });
+define('fe/pods/service-geo/service', ['exports', 'ember', 'fe/utils'], function (exports, _ember, _utils) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _asyncToGenerator(fn) {
+    return function () {
+      var gen = fn.apply(this, arguments);
+      return new Promise(function (resolve, reject) {
+        function step(key, arg) {
+          try {
+            var info = gen[key](arg);
+            var value = info.value;
+          } catch (error) {
+            reject(error);
+            return;
+          }
+
+          if (info.done) {
+            resolve(value);
+          } else {
+            return Promise.resolve(value).then(function (value) {
+              step("next", value);
+            }, function (err) {
+              step("throw", err);
+            });
+          }
+        }
+
+        return step("next");
+      });
+    };
+  }
+
+  exports.default = _ember.default.Service.extend({
+    getGeo: function () {
+      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+        var geo;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return (0, _utils.check)('deviceready').catch(function (e) {
+                  return (0, _utils.f7Alert)(e);
+                });
+
+              case 2:
+                geo = _context.sent;
+
+              case 3:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function getGeo() {
+        return _ref.apply(this, arguments);
+      }
+
+      return getGeo;
+    }()
+  });
+});
 define('fe/pods/signup/route', ['exports', 'ember'], function (exports, _ember) {
   'use strict';
 
@@ -573,6 +646,108 @@ define('fe/services/ajax', ['exports', 'ember-ajax/services/ajax'], function (ex
     }
   });
 });
+define('fe/utils/index', ['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.check = check;
+  exports.f7Alert = f7Alert;
+
+  function _asyncToGenerator(fn) {
+    return function () {
+      var gen = fn.apply(this, arguments);
+      return new Promise(function (resolve, reject) {
+        function step(key, arg) {
+          try {
+            var info = gen[key](arg);
+            var value = info.value;
+          } catch (error) {
+            reject(error);
+            return;
+          }
+
+          if (info.done) {
+            resolve(value);
+          } else {
+            return Promise.resolve(value).then(function (value) {
+              step("next", value);
+            }, function (err) {
+              step("throw", err);
+            });
+          }
+        }
+
+        return step("next");
+      });
+    };
+  }
+
+  function check(propertyName) {
+    var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window;
+    var timeout = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 15000;
+
+    var useTime = 0;
+    var interval = 500;
+    return new Promise(function (res, rej) {
+      var intervalFlag = setInterval(function () {
+        useTime += interval;
+        if (useTime > timeout) {
+          clearInterval(intervalFlag);
+          rej('check time out');
+        }
+        propertyName = typeof propertyName == 'function' ? propertyName() : context[propertyName];
+        if (propertyName) {
+          clearInterval(intervalFlag);
+          res(propertyName);
+        }
+      }, interval);
+    });
+  }
+
+  function f7Alert(msg) {
+    var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '消息提示';
+    var cb = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {
+      return null;
+    };
+
+    f7App.alert(msg, title, cb);
+  }
+
+  var f7Confirm = exports.f7Confirm = function () {
+    var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(msg, title) {
+      var cbOk = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {
+        return true;
+      };
+      var cbCancel = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : function () {
+        return false;
+      };
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              return _context.abrupt('return', new Promise(function (res) {
+                f7App.confirm(msg, title, function () {
+                  cbOk();res({ state: true });
+                }, function () {
+                  cbCancel();res({ state: false });
+                });
+              }));
+
+            case 1:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    return function f7Confirm(_x7, _x8) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+});
 
 
 define('fe/config/environment', ['ember'], function(Ember) {
@@ -595,6 +770,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("fe/app")["default"].create({"name":"fe","version":"0.0.0+60333010"});
+  require("fe/app")["default"].create({"name":"fe","version":"0.0.0+e8609459"});
 }
 //# sourceMappingURL=fe.map

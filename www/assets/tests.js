@@ -47,7 +47,7 @@ define('fe/tests/app.lint-test', [], function () {
 
   QUnit.test('pods/index/route.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'pods/index/route.js should pass ESLint\n\n');
+    assert.ok(false, 'pods/index/route.js should pass ESLint\n\n6:5 - Unexpected console statement. (no-console)');
   });
 
   QUnit.test('pods/login/login-comp/component.js', function (assert) {
@@ -65,6 +65,11 @@ define('fe/tests/app.lint-test', [], function () {
     assert.ok(true, 'pods/resetpwd/route.js should pass ESLint\n\n');
   });
 
+  QUnit.test('pods/service-geo/service.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'pods/service-geo/service.js should pass ESLint\n\n5:9 - \'geo\' is assigned a value but never used. (no-unused-vars)');
+  });
+
   QUnit.test('pods/signup/route.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'pods/signup/route.js should pass ESLint\n\n');
@@ -78,6 +83,11 @@ define('fe/tests/app.lint-test', [], function () {
   QUnit.test('router.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'router.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('utils/index.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'utils/index.js should pass ESLint\n\n');
   });
 });
 define('fe/tests/helpers/destroy-app', ['exports', 'ember'], function (exports, _ember) {
@@ -329,9 +339,19 @@ define('fe/tests/tests.lint-test', [], function () {
     assert.ok(true, 'unit/pods/resetpwd/route-test.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/pods/service-geo/service-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/pods/service-geo/service-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/pods/signup/route-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/pods/signup/route-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/utils/index-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/utils/index-test.js should pass ESLint\n\n');
   });
 });
 define('fe/tests/unit/pods/application/route-test', ['ember-qunit'], function (_emberQunit) {
@@ -412,6 +432,20 @@ define('fe/tests/unit/pods/resetpwd/route-test', ['ember-qunit'], function (_emb
     assert.ok(route);
   });
 });
+define('fe/tests/unit/pods/service-geo/service-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('service:service-geo', 'Unit | Service | service geo', {
+    // Specify the other units that are required for this test.
+    // needs: ['service:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var service = this.subject();
+    assert.ok(service);
+  });
+});
 define('fe/tests/unit/pods/signup/route-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
 
@@ -423,6 +457,17 @@ define('fe/tests/unit/pods/signup/route-test', ['ember-qunit'], function (_ember
   (0, _emberQunit.test)('it exists', function (assert) {
     var route = this.subject();
     assert.ok(route);
+  });
+});
+define('fe/tests/unit/utils/index-test', ['fe/utils/index', 'qunit'], function (_index, _qunit) {
+  'use strict';
+
+  (0, _qunit.module)('Unit | Utility | index');
+
+  // Replace this with your real tests.
+  (0, _qunit.test)('it works', function (assert) {
+    var result = (0, _index.default)();
+    assert.ok(result);
   });
 });
 require('fe/tests/test-helper');

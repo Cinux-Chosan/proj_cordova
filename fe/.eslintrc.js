@@ -13,6 +13,7 @@ module.exports = {
   globals: {
     'Framework7': false,
     'f7App': false,
-    'BMap': false
+    'BMap': false,
+    'Promise': true
   }
 };
