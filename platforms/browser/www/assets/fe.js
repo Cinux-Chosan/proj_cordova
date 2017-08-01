@@ -419,7 +419,19 @@ define('fe/pods/components/show-protocol/component', ['exports', 'ember'], funct
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = _ember.default.Component.extend({});
+  exports.default = _ember.default.Component.extend({
+    geo: _ember.default.inject.service(),
+    didInsertElement: function didInsertElement() {
+      var _this = this;
+
+      this._super.apply(this, arguments);
+      var geo = this.get('geo');
+      var watchID = geo.watch(function (pos) {
+        _this.set('position', pos);
+      });
+      this.set('watchID', watchID);
+    }
+  });
 });
 define("fe/pods/components/show-protocol/template", ["exports"], function (exports) {
   "use strict";
@@ -427,7 +439,7 @@ define("fe/pods/components/show-protocol/template", ["exports"], function (expor
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "7LwTakrK", "block": "{\"statements\":[[11,\"div\",[]],[15,\"class\",\"popup popup-protocol show-protocol\"],[13],[0,\"\\n  \"],[11,\"div\",[]],[15,\"class\",\"content-block\"],[13],[0,\"\\n    \"],[18,\"default\"],[0,\"\\n  \"],[11,\"a\",[]],[15,\"class\",\"close-popup\"],[15,\"data-popup\",\".show-protocol\"],[13],[0,\"关闭\"],[14],[0,\"\\n  \"],[14],[0,\"\\n\"],[14],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[\"default\"],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/components/show-protocol/template.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "gaKhAZNU", "block": "{\"statements\":[[11,\"div\",[]],[15,\"class\",\"popup popup-protocol show-protocol\"],[13],[0,\"\\n  \"],[11,\"div\",[]],[15,\"class\",\"content-block\"],[13],[0,\"\\n    \"],[1,[28,[\"position\",\"coords\",\"latitude\"]],false],[0,\" + \"],[1,[28,[\"position\",\"coords\",\"longitude\"]],false],[0,\"\\n    \"],[18,\"default\"],[0,\"\\n  \"],[11,\"a\",[]],[15,\"class\",\"close-popup\"],[15,\"data-popup\",\".show-protocol\"],[13],[0,\"关闭\"],[14],[0,\"\\n  \"],[14],[0,\"\\n\"],[14],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[\"default\"],\"hasPartials\":false}", "meta": { "moduleName": "fe/pods/components/show-protocol/template.hbs" } });
 });
 define('fe/pods/home/route', ['exports', 'ember'], function (exports, _ember) {
   'use strict';
@@ -573,6 +585,237 @@ define('fe/services/ajax', ['exports', 'ember-ajax/services/ajax'], function (ex
     }
   });
 });
+define('fe/services/geo', ['exports', 'ember', 'fe/utils'], function (exports, _ember, _utils) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  function _asyncToGenerator(fn) {
+    return function () {
+      var gen = fn.apply(this, arguments);
+      return new Promise(function (resolve, reject) {
+        function step(key, arg) {
+          try {
+            var info = gen[key](arg);
+            var value = info.value;
+          } catch (error) {
+            reject(error);
+            return;
+          }
+
+          if (info.done) {
+            resolve(value);
+          } else {
+            return Promise.resolve(value).then(function (value) {
+              step("next", value);
+            }, function (err) {
+              step("throw", err);
+            });
+          }
+        }
+
+        return step("next");
+      });
+    };
+  }
+
+  exports.default = _ember.default.Service.extend({
+    defaultOpts: { timeout: 30000, enableHighAccuracy: true, maximumAge: 0 },
+    watch: function () {
+      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(onSuccess) {
+        var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var onError = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function (e) {
+          (0, _utils.f7Alert)(e.message);
+        };
+        var defaultOpts;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return (0, _utils.check)('deviceready').catch(function (e) {
+                  return (0, _utils.f7Alert)(e);
+                });
+
+              case 2:
+                defaultOpts = this.get('defaultOpts');
+                return _context.abrupt('return', navigator.geolocation.watchPosition(onSuccess, onError, _extends({}, defaultOpts, opts)));
+
+              case 4:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function watch(_x3) {
+        return _ref.apply(this, arguments);
+      }
+
+      return watch;
+    }(),
+    getCurrentPosition: function () {
+      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(onSuccess) {
+        var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var onError = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function (e) {
+          (0, _utils.f7Alert)(e.message);
+        };
+        var defaultOpts;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return (0, _utils.check)('deviceready').catch(function (e) {
+                  return (0, _utils.f7Alert)(e);
+                });
+
+              case 2:
+                defaultOpts = this.get('defaultOpts');
+
+                navigator.geolocation.getCurrentPosition(onSuccess, onError, _extends({}, defaultOpts, opts));
+
+              case 4:
+              case 'end':
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function getCurrentPosition(_x6) {
+        return _ref2.apply(this, arguments);
+      }
+
+      return getCurrentPosition;
+    }(),
+    clearWatch: function clearWatch(watchID) {
+      navigator.geolocation.clearWatch(watchID);
+    }
+  });
+});
+define('fe/utils/index', ['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.check = check;
+  exports.f7Alert = f7Alert;
+
+  function _asyncToGenerator(fn) {
+    return function () {
+      var gen = fn.apply(this, arguments);
+      return new Promise(function (resolve, reject) {
+        function step(key, arg) {
+          try {
+            var info = gen[key](arg);
+            var value = info.value;
+          } catch (error) {
+            reject(error);
+            return;
+          }
+
+          if (info.done) {
+            resolve(value);
+          } else {
+            return Promise.resolve(value).then(function (value) {
+              step("next", value);
+            }, function (err) {
+              step("throw", err);
+            });
+          }
+        }
+
+        return step("next");
+      });
+    };
+  }
+
+  function check(propertyName) {
+    var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window;
+    var timeout = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 15000;
+
+    var useTime = 0;
+    var interval = 500;
+    return new Promise(function (res, rej) {
+      var intervalFlag = setInterval(function () {
+        console.log(context[propertyName]);
+
+        if (useTime > timeout) {
+          clearInterval(intervalFlag);
+          rej('check time out');
+        } else {
+          propertyName = typeof propertyName == 'function' ? propertyName() : context[propertyName];
+          if (propertyName) {
+            clearInterval(intervalFlag);
+            res(propertyName);
+          }
+          useTime += interval;
+        }
+      }, interval);
+    });
+  }
+
+  function f7Alert(msg) {
+    var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '消息提示';
+    var btnClickedCallback = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {
+      return null;
+    };
+
+    f7App.alert(msg, title, btnClickedCallback);
+  }
+
+  var f7Confirm = exports.f7Confirm = function () {
+    var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(msg, title) {
+      var cbOk = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {
+        return true;
+      };
+      var cbCancel = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : function () {
+        return false;
+      };
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              return _context.abrupt('return', new Promise(function (res) {
+                f7App.confirm(msg, title, function () {
+                  cbOk();res({ state: true });
+                }, function () {
+                  cbCancel();res({ state: false });
+                });
+              }));
+
+            case 1:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    return function f7Confirm(_x7, _x8) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+});
 
 
 define('fe/config/environment', ['ember'], function(Ember) {
@@ -595,6 +838,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("fe/app")["default"].create({"name":"fe","version":"0.0.0+60333010"});
+  require("fe/app")["default"].create({"name":"fe","version":"0.0.0+206cea86"});
 }
 //# sourceMappingURL=fe.map
