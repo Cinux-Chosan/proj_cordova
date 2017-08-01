@@ -451,12 +451,7 @@ define('fe/pods/index/route', ['exports', 'ember'], function (exports, _ember) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = _ember.default.Route.extend({
-    xx: _ember.default.inject.service('service-geo'),
-    model: function model() {
-      console.log(this.get('xx').getGeo());
-    }
-  });
+  exports.default = _ember.default.Route.extend({});
 });
 define("fe/pods/index/template", ["exports"], function (exports) {
   "use strict";
@@ -525,6 +520,20 @@ define('fe/pods/service-geo/service', ['exports', 'ember', 'fe/utils'], function
     value: true
   });
 
+  var _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
   function _asyncToGenerator(fn) {
     return function () {
       var gen = fn.apply(this, arguments);
@@ -555,9 +564,14 @@ define('fe/pods/service-geo/service', ['exports', 'ember', 'fe/utils'], function
   }
 
   exports.default = _ember.default.Service.extend({
-    getGeo: function () {
-      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
-        var geo;
+    defaultOpts: { timeout: 30000, enableHighAccuracy: true, maximumAge: 1000 },
+    watch: function () {
+      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(onSuccess) {
+        var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var onError = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {
+          (0, _utils.f7Alert)('定位失败!');
+        };
+        var defaultOpts;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -568,9 +582,10 @@ define('fe/pods/service-geo/service', ['exports', 'ember', 'fe/utils'], function
                 });
 
               case 2:
-                geo = _context.sent;
+                defaultOpts = this.get('defaultOpts');
+                return _context.abrupt('return', navigator.geolocation.watchPosition(onSuccess, onError, _extends({}, defaultOpts, opts)));
 
-              case 3:
+              case 4:
               case 'end':
                 return _context.stop();
             }
@@ -578,12 +593,50 @@ define('fe/pods/service-geo/service', ['exports', 'ember', 'fe/utils'], function
         }, _callee, this);
       }));
 
-      function getGeo() {
+      function watch(_x3) {
         return _ref.apply(this, arguments);
       }
 
-      return getGeo;
-    }()
+      return watch;
+    }(),
+    getCurrentPosition: function () {
+      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(onSuccess) {
+        var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var onError = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {
+          (0, _utils.f7Alert)('定位失败!');
+        };
+        var defaultOpts;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return (0, _utils.check)('deviceready').catch(function (e) {
+                  return (0, _utils.f7Alert)(e);
+                });
+
+              case 2:
+                defaultOpts = this.get('defaultOpts');
+
+                navigator.geolocation.getCurrentPosition(onSuccess, onError, _extends({}, defaultOpts, opts));
+
+              case 4:
+              case 'end':
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function getCurrentPosition(_x6) {
+        return _ref2.apply(this, arguments);
+      }
+
+      return getCurrentPosition;
+    }(),
+    clearWatch: function clearWatch(watchID) {
+      navigator.geolocation.clearWatch(watchID);
+    }
   });
 });
 define('fe/pods/signup/route', ['exports', 'ember'], function (exports, _ember) {
@@ -692,15 +745,16 @@ define('fe/utils/index', ['exports'], function (exports) {
     var interval = 500;
     return new Promise(function (res, rej) {
       var intervalFlag = setInterval(function () {
-        useTime += interval;
         if (useTime > timeout) {
           clearInterval(intervalFlag);
           rej('check time out');
-        }
-        propertyName = typeof propertyName == 'function' ? propertyName() : context[propertyName];
-        if (propertyName) {
-          clearInterval(intervalFlag);
-          res(propertyName);
+        } else {
+          propertyName = typeof propertyName == 'function' ? propertyName() : context[propertyName];
+          if (propertyName) {
+            clearInterval(intervalFlag);
+            res(propertyName);
+          }
+          useTime += interval;
         }
       }, interval);
     });
@@ -708,11 +762,11 @@ define('fe/utils/index', ['exports'], function (exports) {
 
   function f7Alert(msg) {
     var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '消息提示';
-    var cb = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {
+    var btnClickedCallback = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {
       return null;
     };
 
-    f7App.alert(msg, title, cb);
+    f7App.alert(msg, title, btnClickedCallback);
   }
 
   var f7Confirm = exports.f7Confirm = function () {
@@ -770,6 +824,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("fe/app")["default"].create({"name":"fe","version":"0.0.0+e8609459"});
+  require("fe/app")["default"].create({"name":"fe","version":"0.0.0+1173728b"});
 }
 //# sourceMappingURL=fe.map

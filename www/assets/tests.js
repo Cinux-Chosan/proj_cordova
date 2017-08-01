@@ -47,7 +47,7 @@ define('fe/tests/app.lint-test', [], function () {
 
   QUnit.test('pods/index/route.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'pods/index/route.js should pass ESLint\n\n6:5 - Unexpected console statement. (no-console)');
+    assert.ok(true, 'pods/index/route.js should pass ESLint\n\n');
   });
 
   QUnit.test('pods/login/login-comp/component.js', function (assert) {
@@ -67,7 +67,7 @@ define('fe/tests/app.lint-test', [], function () {
 
   QUnit.test('pods/service-geo/service.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'pods/service-geo/service.js should pass ESLint\n\n5:9 - \'geo\' is assigned a value but never used. (no-unused-vars)');
+    assert.ok(true, 'pods/service-geo/service.js should pass ESLint\n\n');
   });
 
   QUnit.test('pods/signup/route.js', function (assert) {

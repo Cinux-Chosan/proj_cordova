@@ -4,8 +4,10 @@ module.exports = {
     ecmaVersion: 2017,
     sourceType: 'module'
   },
+  parser: "babel-eslint",
   extends: 'eslint:recommended',
   env: {
+    es6: true,
     browser: true
   },
   rules: {
