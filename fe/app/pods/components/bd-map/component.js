@@ -8,14 +8,14 @@ export default Ember.Component.extend({
     let map = new BMap.Map(mapEle);
     let point = new BMap.Point(116.404, 39.915);
     map.centerAndZoom(point, 15);
-		map.addControl(new BMap.ScaleControl());
-		map.addControl(new BMap.GeolocationControl());
-		var marker = new BMap.Marker(point);        // 创建标注
-		map.addOverlay(marker);
-		map.addEventListener("dragend", function(){
- var center = map.getCenter();
- alert("地图中心点变更为：" + center.lng + ", " + center.lat);
-});
-		this.set('map', map);
-	}
+    map.addControl(new BMap.ScaleControl());
+    map.addControl(new BMap.GeolocationControl());
+    var marker = new BMap.Marker(point); // 创建标注
+    map.addOverlay(marker);
+    map.addEventListener("dragend", function() {
+      var center = map.getCenter();
+      alert("地图中心点变更为：" + center.lng + ", " + center.lat);
+    });
+    this.set('map', map);
+  }
 });
