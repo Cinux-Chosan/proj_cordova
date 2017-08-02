@@ -23,6 +23,7 @@ export default Ember.Service.extend({
     let watchID = null;
     let defaultOpts = this.get('defaultOpts');
     let _opts = { ...defaultOpts, ...opts };
+    alert(this.get('defaultOpts.enableHighAccuracy'));
 
     // watch 失败的时候是否重新尝试
     if (_opts.retry) {
