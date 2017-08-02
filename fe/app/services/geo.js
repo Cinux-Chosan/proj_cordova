@@ -5,10 +5,11 @@ import { check, f7Alert } from 'fe/utils';
 const { run: { later } } = Ember;
 
 export default Ember.Service.extend({
-  defaultOpts: { maximumAge: 3000, timeout: 15000, enableHighAccuracy: true, retry: true, convert2BD: true },
+  defaultOpts: { maximumAge: 3000, timeout: 15000, enableHighAccuracy: false, retry: true, convert2BD: true },
 
   @observes('defaultOpts.enableHighAccuracy')
   enableHighAccuracyChanged() {
+    alert('enableHighAccuracyChanged');
     let enableHighAccuracy = this.get('defaultOpts.enableHighAccuracy');
     if (!enableHighAccuracy) {
       later(() => this.set('defaultOpts.enableHighAccuracy', true), 3 * 1000 * 60); // 3 分钟后重置定位精确度
@@ -24,17 +25,20 @@ export default Ember.Service.extend({
     let defaultOpts = this.get('defaultOpts');
     let _opts = { ...defaultOpts, ...opts };
     alert(this.get('defaultOpts.enableHighAccuracy'));
+    alert(opts.retryCount);
+
 
     // watch 失败的时候是否重新尝试
     if (_opts.retry) {
       onError = () => {
         // retrying
         alert('retrying');
-        if (_opts.retryCount++ == 3) {
+
+        if (!(++opts.retryCount % 3)) {
           this.set('defaultOpts.enableHighAccuracy', false);
         }
         this.clearWatch(watchID);
-        this.watch(...arguments);
+        this.watch(onSuccess, opts, onError);
       }
     }
 
@@ -59,10 +63,10 @@ export default Ember.Service.extend({
     let _opts = { ...defaultOpts, ...opts };
     if (_opts.retry) {
       onError = () => {
-        if (_opts.retryCount++ == 3) {
+        if (!(++opts.retryCount % 3)) {
           this.set('defaultOpts.enableHighAccuracy', false);
         }
-        this.getCurrentPosition(...arguments);
+        this.getCurrentPosition(onSuccess, opts, onError);
       }
     }
 
