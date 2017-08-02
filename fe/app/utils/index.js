@@ -7,10 +7,10 @@ export function check(propertyName, context = window, timeout = 15000) {
         clearInterval(intervalFlag);
         rej('check time out');
       } else {
-        propertyName = typeof propertyName == 'function' ? propertyName() : context[propertyName];
-        if (propertyName) {
+        let val = typeof propertyName == 'function' ? propertyName() : context[propertyName];
+        if (val) {
           clearInterval(intervalFlag);
-          res(propertyName);
+          res(val);
         }
         useTime += interval;
       }
