@@ -6,13 +6,16 @@ export default Ember.Service.extend({
 
   // 监视坐标
   async watch(onSuccess, opts = {}, onError = e => { f7Alert(e.message) }) {
-    await check('deviceready').catch(e => {
+    let deviceready = await check('deviceready').catch(e => {
       f7Alert(e);
-      throw new Error(e);
     });
+    if (!deviceready) {
+      return '';
+    }
     let watchID = null;
     let defaultOpts = this.get('defaultOpts');
     let _opts = { ...defaultOpts, ...opts };
+    
     // watch 失败的时候是否重新尝试
     if (_opts.retry) {
       onError = () => {
