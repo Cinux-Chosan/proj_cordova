@@ -60,7 +60,7 @@ export default Ember.Service.extend({
     return navigator.geolocation.getCurrentPosition(onSuccess, onError, _opts);
   },
 
-  // 清理 watchID
+  // 清理 watch 生成的 watchID
   clearWatch(watchID) {
     navigator.geolocation.clearWatch(watchID);
   },
