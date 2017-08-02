@@ -1,5 +1,7 @@
 import Ember from 'ember';
+import { observes } from 'ember-computed-decorators';
 import { check } from 'fe/utils';
+const { run: { once } } = Ember;
 
 export default Ember.Component.extend({
   classNames: ['w100p', 'h100p', 'bd-map-container'],
@@ -14,6 +16,22 @@ export default Ember.Component.extend({
     });
     this.set('watchID', watchID);
   },
+
+  @observes('pos.bdCoords.firstObject.{lat,lng}')
+  bdCoordsChanged() {
+    once(null, () => {
+      let coords = this.get('pos.bdCoords.firstObject');
+      let point = new BMap.Point(coords.lng, coords.lat);
+      this.addMarker(point);
+    });
+  },
+
+  async addMarker(point) {
+    let marker = new BMap.Marker(point);
+    let map = await check(() => this.get('map'));
+    map.addOverlay(marker);
+  },
+
   async didInsertElement() {
     this._super(...arguments);
     await check('BMap');
@@ -26,10 +44,6 @@ export default Ember.Component.extend({
     map.addControl(new BMap.GeolocationControl());
     var marker = new BMap.Marker(point); // 创建标注
     map.addOverlay(marker);
-    map.addEventListener("dragend", function() {
-      var center = map.getCenter();
-      alert("地图中心点变更为：" + center.lng + ", " + center.lat);
-    });
     this.set('map', map);
   }
 });

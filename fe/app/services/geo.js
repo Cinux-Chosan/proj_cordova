@@ -1,26 +1,37 @@
 import Ember from 'ember';
+import { observes } from 'ember-computed-decorators';
 import { check, f7Alert } from 'fe/utils';
+
+const { run: { later } } = Ember;
 
 export default Ember.Service.extend({
   defaultOpts: { maximumAge: 3000, timeout: 15000, enableHighAccuracy: true, retry: true, convert2BD: true },
 
-  // 监视坐标
-  async watch(onSuccess, opts = {}, onError = e => { f7Alert(e.message) }) {
-    let deviceready = await check('deviceready').catch(e => {
-      f7Alert(e);
-    });
-    if (!deviceready) {
-      return '';
+  @observes('defaultOpts.enableHighAccuracy')
+  enableHighAccuracyChanged() {
+    let enableHighAccuracy = this.get('defaultOpts.enableHighAccuracy');
+    if (!enableHighAccuracy) {
+      later(() => this.set('defaultOpts.enableHighAccuracy', true), 3 * 1000 * 60); // 3 分钟后重置定位精确度
     }
+  },
+
+  // 监视坐标
+  async watch(onSuccess, opts = { retryCount: 0 }, onError = e => { f7Alert(e.message) }) {
+    let deviceready = await check('deviceready').catch(e => f7Alert(e));
+    if (!deviceready) return '';
+
     let watchID = null;
     let defaultOpts = this.get('defaultOpts');
     let _opts = { ...defaultOpts, ...opts };
-    
+
     // watch 失败的时候是否重新尝试
     if (_opts.retry) {
       onError = () => {
         // retrying
         alert('retrying');
+        if (_opts.retryCount++ == 3) {
+          this.set('defaultOpts.enableHighAccuracy', false);
+        }
         this.clearWatch(watchID);
         this.watch(...arguments);
       }
@@ -39,15 +50,17 @@ export default Ember.Service.extend({
   },
 
   // 获得当前坐标
-  async getCurrentPosition(onSuccess, opts = {}, onError = e => { f7Alert(e.message) }) {
-    await check('deviceready').catch(e => {
-      f7Alert(e);
-      throw new Error(e);
-    });
+  async getCurrentPosition(onSuccess, opts = { retryCount: 0 }, onError = e => { f7Alert(e.message) }) {
+    let deviceready = await check('deviceready').catch(e => f7Alert(e));
+    if (!deviceready) return;
+
     let defaultOpts = this.get('defaultOpts');
     let _opts = { ...defaultOpts, ...opts };
     if (_opts.retry) {
       onError = () => {
+        if (_opts.retryCount++ == 3) {
+          this.set('defaultOpts.enableHighAccuracy', false);
+        }
         this.getCurrentPosition(...arguments);
       }
     }
