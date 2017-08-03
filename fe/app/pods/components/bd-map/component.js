@@ -19,9 +19,11 @@ export default Ember.Component.extend({
 
   @observes('pos.bdCoords.firstObject.{lat,lng}')
   bdCoordsChanged() {
-    once(null, () => {
+    once(null, async () => {
       let coords = this.get('pos.bdCoords.firstObject');
       let point = new BMap.Point(coords.lng, coords.lat);
+      let map = await check(() => this.get('map'));
+      map.panTo(point);
       this.addMarker(point);
     });
   },
@@ -37,8 +39,9 @@ export default Ember.Component.extend({
     await check('BMap');
     let mapEle = this.$(`#${this.get('componentCssClassName')}`).get(0);
     let map = new BMap.Map(mapEle);
-    let coords = await check(()=> this.get('pos.bdCoords.firstObject.lat') && this.get('pos.bdCoords.firstObject'));
-    let point = new BMap.Point(coords.lng, coords.lat);
+    // let coords = await check(()=> this.get('pos.bdCoords.firstObject.lat') && this.get('pos.bdCoords.firstObject'));
+    // let point = new BMap.Point(coords.lng, coords.lat);
+    let point = new BMap.Point(111, 111);
     map.centerAndZoom(point, 15);
     map.addControl(new BMap.ScaleControl());
     map.addControl(new BMap.GeolocationControl());
