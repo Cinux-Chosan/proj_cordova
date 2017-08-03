@@ -5,14 +5,16 @@ import { check, f7Alert } from 'fe/utils';
 const { run: { later } } = Ember;
 
 export default Ember.Service.extend({
-  defaultOpts: { maximumAge: 3000, timeout: 15000, enableHighAccuracy: false, retry: true, convert2BD: true },
+  defaultOpts: { maximumAge: 3000, timeout: 15000, enableHighAccuracy: true, retry: true, convert2BD: true },
+  resetAccuracyTime: 3 * 1000 * 60,
 
   @observes('defaultOpts.enableHighAccuracy')
   enableHighAccuracyChanged() {
     alert('enableHighAccuracyChanged');
     let enableHighAccuracy = this.get('defaultOpts.enableHighAccuracy');
     if (!enableHighAccuracy) {
-      later(() => this.set('defaultOpts.enableHighAccuracy', true), 3 * 1000 * 60); // 3 分钟后重置定位精确度
+      let resetAccuracyTime = this.get('resetAccuracyTime');
+      later(() => this.set('defaultOpts.enableHighAccuracy', true), resetAccuracyTime); // 3 分钟后重置定位精确度
     }
   },
 
@@ -34,8 +36,13 @@ export default Ember.Service.extend({
         // retrying
         alert('retrying');
 
-        if (!(++opts.retryCount % 3)) {
-          this.set('defaultOpts.enableHighAccuracy', false);
+        if (!(++opts.retryCount % 3)) {  // 3 次失败过后将定位精度降低
+          this.toggleProperty('defaultOpts.enableHighAccuracy');
+          let resetAccuracyTime = this.get('resetAccuracyTime');
+          later(() => {
+            this.clearWatch(watchID);
+            this.watch(onSuccess, opts, onError);
+          }, resetAccuracyTime);  // 重置精度后重启观察，以改变后的精度观察定位
         }
         this.clearWatch(watchID);
         this.watch(onSuccess, opts, onError);
