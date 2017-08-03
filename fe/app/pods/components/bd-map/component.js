@@ -9,7 +9,6 @@ export default Ember.Component.extend({
   geo: Ember.inject.service(),
   init() {
     this._super(...arguments);
-    alert('init');
     let geo = this.get('geo');
     let watchID = geo.watch(pos => {
       this.set('pos', pos);
@@ -24,7 +23,9 @@ export default Ember.Component.extend({
       let point = new BMap.Point(coords.lng, coords.lat);
       let map = await check(() => this.get('map'));
       map.panTo(point);
-      this.addMarker(point);
+      // this.addMarker(point);
+      let addr = await this.getAddr(point);
+      this.set('address', addr);
     });
   },
 
@@ -34,6 +35,14 @@ export default Ember.Component.extend({
     map.addOverlay(marker);
   },
 
+  async getAddr(point) {
+    let BMap = await check('BMap');
+    let geoCoder = new BMap.Geocoder();
+    return new Promise((res, rej) => {
+      geoCoder.getLocation(point, r => r ? res(r.address): rej('地址解析错误!'));
+    })
+  },
+
   async didInsertElement() {
     this._super(...arguments);
     await check('BMap');
@@ -41,8 +50,9 @@ export default Ember.Component.extend({
     let map = new BMap.Map(mapEle);
     // let coords = await check(()=> this.get('pos.bdCoords.firstObject.lat') && this.get('pos.bdCoords.firstObject'));
     // let point = new BMap.Point(coords.lng, coords.lat);
-    let point = new BMap.Point(111, 111);
+    let point = new BMap.Point(116.404, 39.915);
     map.centerAndZoom(point, 15);
+    map.enableScrollWheelZoom();
     map.addControl(new BMap.ScaleControl());
     map.addControl(new BMap.GeolocationControl());
     var marker = new BMap.Marker(point); // 创建标注
