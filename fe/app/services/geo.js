@@ -30,7 +30,7 @@ export default Ember.Service.extend({
     if (_opts.retry) {
       onError = () => {
         // retrying
-        alert('retrying');
+        // alert('retrying');
 
         if (!(++opts.retryCount % 3)) {  // 3 次失败过后将定位精度降低
           this.toggleProperty('defaultOpts.enableHighAccuracy');
