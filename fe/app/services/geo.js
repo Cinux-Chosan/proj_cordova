@@ -10,7 +10,6 @@ export default Ember.Service.extend({
 
   @observes('defaultOpts.enableHighAccuracy')
   enableHighAccuracyChanged() {
-    alert('enableHighAccuracyChanged');
     let enableHighAccuracy = this.get('defaultOpts.enableHighAccuracy');
     if (!enableHighAccuracy) {
       let resetAccuracyTime = this.get('resetAccuracyTime');
@@ -26,9 +25,6 @@ export default Ember.Service.extend({
     let watchID = null;
     let defaultOpts = this.get('defaultOpts');
     let _opts = { ...defaultOpts, ...opts };
-    alert(this.get('defaultOpts.enableHighAccuracy'));
-    alert(opts.retryCount);
-
 
     // watch 失败的时候是否重新尝试
     if (_opts.retry) {
