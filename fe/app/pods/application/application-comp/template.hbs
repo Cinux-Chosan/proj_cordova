@@ -1,8 +1,16 @@
 <div class="navbar">
   <div class="navbar-inner">
-    <div class="left"><a class="open-panel link icon-only" data-panel="left"><i class="iconfont icon-yonghu"></i></a></div>
+    <div class="left">
+      <a class="open-panel link icon-only" data-panel="left">
+        {{!-- <i class="iconfont icon-yonghu"></i> --}}
+        {{!-- <i class="icon icon-person"></i> --}}
+        <i class="f7-icons size-50">person</i>
+      </a>
+    </div>
     <div class="center">{{addr}}</div>
-    <div class="right"><a class="link icon-only"> <i class="iconfont icon-xiaoxi"></i></a></div>
+    <div class="right"><a class="link icon-only">
+       <i class="f7-icons">chat_fill</i>
+     </a></div>
   </div>
 </div>
 {{yield}}

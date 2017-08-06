@@ -29,7 +29,9 @@ module.exports = function(defaults) {
 
 
   ///////////////////////  import f7
-  app.import('vendor/framework7/dist/css/framework7.ios.min.css')
+  app.import('vendor/framework7/dist/css/framework7.ios.min.css');
+  // app.import('vendor/framework7-icons/css/framework7-icons.css');
+
   app.import('vendor/framework7/dist/js/framework7.min.js');
 
   return app.toTree();
